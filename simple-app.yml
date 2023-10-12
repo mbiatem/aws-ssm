@@ -1,0 +1,23 @@
+---
+schemaVersion: "2.2"
+description: "Installs, httpd and git and clones repo"
+mainSteps:
+- action: "aws:runShellScript"
+  name: "installhttpd"
+  inputs:
+    runCommand:
+    - "yum install httpd -y"
+    - "systemctl start httpd"
+    - "systemctl enable httpd"
+- action: "aws:runShellScript"
+  name: "installgit"
+  inputs:
+    runCommand:
+    - "yum install git -y"
+    - "git clone https://github.com/elvis-cloud/velocity.git /tmp/my-repo"
+- action: "aws:runShellScript"
+  name: "CopyFiles"
+  inputs:
+    runCommand:
+    - "cp -r /tmp/my-repo/* /var/www/html/"
+    - "rm -rf /tmp/my-repo"

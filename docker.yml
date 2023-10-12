@@ -1,0 +1,11 @@
+---
+schemaVersion: "2.2"
+description: "Installs, Starts and Enables docker"
+mainSteps:
+- action: "aws:runShellScript"
+  name: "installDocker"
+  inputs:
+    runCommand:
+    - "amazon-linux-extras install docker -y"
+    - "docker service start"
+    - "systemctl enable docker"
